@@ -85,11 +85,11 @@ jobs:
           prerelease: false
           body: 'Here is the new release of Airdrop.'
           
-      - name: Set executable permissions on macOS binary
-        run: chmod +x ./bin/airdrop-mac/airdrop
+      - name: Compress macOS binary
+        run: tar -czvf airdrop-mac.tar.gz -C ./bin/airdrop-mac airdrop
   
-      - name: Set executable permissions on Windows binary
-        run: chmod +x ./bin/airdrop-win/airdrop.exe
+      - name: Compress Windows binary
+        run: zip -j ./bin/airdrop-win/airdrop-win.zip ./bin/airdrop-win/airdrop.exe
   
       - name: Upload macOS binary to Release
         uses: actions/upload-release-asset@v1
@@ -97,16 +97,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/airdrop-mac/airdrop
-          asset_name: airdrop-mac
-          asset_content_type: application/octet-stream
-
+          asset_path: ./bin/airdrop-mac.tar.gz
+          asset_name: airdrop-mac.tar.gz
+          asset_content_type: application/gzip
+  
       - name: Upload Windows binary to Release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/airdrop-win/airdrop.exe
-          asset_name: airdrop-win.exe
-          asset_content_type: application/octet-stream
+          asset_path: ./bin/airdrop-win/airdrop-win.zip
+          asset_name: airdrop-win.zip
+          asset_content_type: application/zip
+  
