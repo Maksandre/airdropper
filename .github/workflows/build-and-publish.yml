@@ -30,10 +30,10 @@ jobs:
         run: npm run build
 
       - name: Compress macOS binary
-        run: tar -czvf ./bin/airdrop-mac.tar.gz -C ./bin/airdrop airdrop
+        run: tar -czvf ./bin/airdrop-mac.tar.gz -C ./bin/airdrop-mac airdrop
 
       - name: Compress Windows binary
-        run: zip -j ./bin/airdrop-win.zip ./bin/airdrop.exe
+        run: zip -j ./bin/airdrop-win.zip ./bin/airdrop-win/airdrop.exe
 
       - name: Create Release
         id: create_release
