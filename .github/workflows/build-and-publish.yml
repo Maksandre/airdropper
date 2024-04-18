@@ -62,6 +62,7 @@ jobs:
           path: ./bin/airdrop.exe
 
   release:
+    permissions: write-all
     needs: [build-mac, build-windows]
     runs-on: ubuntu-latest
     steps:
