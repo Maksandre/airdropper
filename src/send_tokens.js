@@ -19,7 +19,10 @@ const main = async () => {
         ? "https://rest.unique.network/unique/v1"
         : "https://rest.unique.network/quartz/v1";
 
-    const list = (await fs.readFile(LIST).then(b => b.toString())).split('\n');
+    const list = (
+        await fs.readFile(LIST)
+            .then(b => b.toString())).split('\n')
+            .filter(r => r !== "");
 
     const account = Sr25519Account.fromUri(settings.mnemonic);
     const options = {
@@ -34,7 +37,7 @@ const main = async () => {
     console.log('Drop amount:', settings.DROP);
     console.log('Need balance:', needBalance);
     if (balance.availableBalance.formatted < needBalance) {
-        console.log('❌ Balance low');
+        console.log('[x] Balance low');
         return;
     }
 
@@ -58,12 +61,12 @@ const main = async () => {
         const result = await Promise.allSettled(txs);
         for (const [i, r] of result.entries()) {
             if(r.status === 'rejected') {
-                console.log(`❌ ${accountsToDrop[i]} error: ${r.reason}`);
+                console.error(`[x] ${accountsToDrop[i]} error: ${r.reason}`);
                 list.push(accountsToDrop[i]);
                 isError = true;
             } 
             else {
-                console.log(`✅ ${accountsToDrop[i]} dropped`)
+                console.log(`[v] ${accountsToDrop[i]} dropped`)
                 accountsDropped.push(accountsToDrop[i]);
             }
         }
