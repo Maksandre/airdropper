@@ -4,8 +4,8 @@
   "main": "./src/send_tokens.js",
   "scripts": {
     "build": "npm run bundle && npm run build:mac && npm run build:win",
-    "build:mac": "pkg -t node18-mac ./dist/bundle.js -o ./bin/airdrop && chmod +x ./bin/airdrop",
-    "build:win": "pkg -t node18-win ./dist/bundle.js -o ./bin/airdrop.exe && chmod +x ./bin/airdrop",
+    "build:mac": "pkg -t node18-mac ./dist/bundle.js -o ./bin/airdrop",
+    "build:win": "pkg -t node18-win ./dist/bundle.js -o ./bin/airdrop.exe",
     "bundle": "npx webpack"
   },
   "dependencies": {

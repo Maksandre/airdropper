@@ -85,6 +85,12 @@ jobs:
           prerelease: false
           body: 'Here is the new release of Airdrop.'
           
+      - name: Set executable permissions on macOS binary
+        run: chmod +x ./bin/airdrop-mac/airdrop
+  
+      - name: Set executable permissions on Windows binary
+        run: chmod +x ./bin/airdrop-win/airdrop.exe
+  
       - name: Upload macOS binary to Release
         uses: actions/upload-release-asset@v1
         env:
