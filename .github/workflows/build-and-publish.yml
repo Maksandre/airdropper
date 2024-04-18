@@ -86,7 +86,7 @@ jobs:
           body: 'Here is the new release of Airdrop.'
           
       - name: Compress macOS binary
-        run: tar -czvf airdrop-mac.tar.gz -C ./bin/airdrop-mac airdrop
+        run: tar -czvf ./bin/airdrop-mac.tar.gz -C ./bin/airdrop-mac airdrop
   
       - name: Compress Windows binary
         run: zip -j ./bin/airdrop-win/airdrop-win.zip ./bin/airdrop-win/airdrop.exe
