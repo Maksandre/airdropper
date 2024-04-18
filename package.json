@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@unique-nft/sdk": "^0.7.3",
-    "@unique-nft/sr25519": "^0.0.2"
+    "@unique-nft/sr25519": "^0.0.2",
+    "pkg": "^5.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
