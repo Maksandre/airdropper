@@ -1,0 +1,57 @@
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project using Webpack
+        run: npx webpack
+
+      - name: Package application with pkg
+        run: pkg -t node18-mac ./dist/bundle.js -o ./dist/airdrop
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: airdrop-mac
+          path: ./dist/airdrop
+
+  release:
+    needs: build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: airdrop-mac
+          path: dist
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body: 'Here is the new release of Airdrop.'
+          assets: ./dist/airdrop
+
